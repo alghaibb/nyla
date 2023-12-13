@@ -49,7 +49,7 @@ export const CartPage: React.FC<{
               {!user && (
                 <Fragment>
                   {' '}
-                  <Link href={`/login?redirect=%2Fcart`}>Log in</Link>
+                  <Link href={`/login?redirect=%2Fcart`}>Login</Link>
                   {` to view a saved cart.`}
                 </Fragment>
               )}
