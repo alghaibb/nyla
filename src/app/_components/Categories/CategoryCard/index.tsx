@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import { Category, Media } from '../../../../payload/payload-types'
 import { useFilter } from '../../../_providers/Filter'
@@ -15,11 +16,12 @@ type CategoryCardProps = {
 const CategoryCard = ({ category }: CategoryCardProps) => {
   const media = category.media as Media
   const { setCategoryFilters } = useFilter()
+  const router = useRouter()
 
   const handleClick = e => {
     e.preventDefault()
     setCategoryFilters([category.id])
-    window.location.href = '/products'
+    router.push('/products')
   }
 
   return (
