@@ -1,6 +1,8 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { FaUser } from 'react-icons/fa'
+import { Twirl as Hamburger } from 'hamburger-react'
 import Link from 'next/link'
 
 import { Header as HeaderType } from '../../../../payload/payload-types'
@@ -12,25 +14,72 @@ import { CMSLink } from '../../Link'
 import classes from './index.module.scss'
 
 export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
+  const [isNavOpen, setIsNavOpen] = useState(false)
   const navItems = header?.navItems || []
   const { user } = useAuth()
 
+  const toggleNav = () => {
+    setIsNavOpen(!isNavOpen)
+  }
+
+  // Close the nav if clicking outside of it
+  useEffect(() => {
+    const closeNav = e => {
+      if (isNavOpen && !e.target.closest(`.${classes.nav}`)) {
+        setIsNavOpen(false)
+
+        // Enable scrolling on the body when the menu is closed
+        document.body.style.overflow = 'auto'
+      }
+    }
+
+    document.addEventListener('click', closeNav)
+    return () => document.removeEventListener('click', closeNav)
+  }, [isNavOpen])
+
+  // Disable scrolling on the body when the menu is open
+  useEffect(() => {
+    if (isNavOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'auto'
+    }
+  }, [isNavOpen])
+
   return (
-    <nav className={classes.nav}>
-      {navItems.map(({ link }, i) => {
-        return <CMSLink key={i} {...link} appearance="none" />
-      })}
-      <CartLink />
-      {user && <Link href="/account">Account</Link>}
-      {!user && (
-        <Button
-          el="link"
-          href="/login"
-          label="Login"
-          appearance="primary"
-          onClick={() => (window.location.href = '/login')}
-        />
-      )}
-    </nav>
+    <>
+      <button className={classes.hamburger} onClick={toggleNav}>
+        <Hamburger toggled={isNavOpen} toggle={setIsNavOpen} size={24} />
+      </button>
+
+      <nav className={`${classes.nav} ${isNavOpen ? classes.isOpen : ''}`}>
+        {navItems.map(({ link }, i) => {
+          return <CMSLink key={i} {...link} appearance="none" />
+        })}
+        <CartLink />
+        {user && <Link href="/account">Account</Link>}
+        {!user && (
+          <div className={`${classes.buttonForLargeScreen}`}>
+            <Button
+              el="link"
+              href="/login"
+              label="Login"
+              appearance="primary"
+              onClick={() => (window.location.href = '/login')}
+              className={classes.navButton}
+            />
+          </div>
+        )}
+
+        {isNavOpen && (
+          <div className={`${classes.userIconContainer}`}>
+            <FaUser style={{ marginRight: '0.5rem', fontSize: '1.5rem' }} />
+            <Link href="/login">
+              <span className={classes.spanText}>Login</span>
+            </Link>
+          </div>
+        )}
+      </nav>
+    </>
   )
 }
