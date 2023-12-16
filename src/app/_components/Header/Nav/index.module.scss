@@ -96,6 +96,17 @@
     padding-left: 1.2rem;
     width: 100%;
 
+    a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    img {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
     &::before {
       content: '';
       position: absolute;
