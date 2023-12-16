@@ -21,6 +21,8 @@
 @include small-break {
   .nav a:not(.userIconContainer a) {
     margin: 1rem 2rem;
+    font-weight: 600;
+    color: #080707;
   }
 }
 
@@ -34,7 +36,7 @@
 }
 
 .navButton:hover {
-  background: rgb(39, 37, 37);
+  background: #151313;
 }
 
 @include small-break {
@@ -49,6 +51,7 @@
   cursor: pointer;
   background: none;
   border: none;
+  color: #080707;
 }
 
 // When the menu is open, display the .nav as a sliding panel from the right
@@ -106,5 +109,6 @@
 
   .spanText {
     font-size: 1.2rem;
+    color: #080707;
   }
 }
