@@ -1,8 +1,9 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { FaUser } from 'react-icons/fa'
+import { FiLogOut } from 'react-icons/fi'
 import { Twirl as Hamburger } from 'hamburger-react'
+import Image from 'next/image'
 import Link from 'next/link'
 
 import { Header as HeaderType } from '../../../../payload/payload-types'
@@ -75,15 +76,15 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
           <div className={`${classes.userIconContainer}`}>
             {user ? (
               <>
-                <FaUser style={{ marginRight: '0.5rem', fontSize: '1.5rem' }} />
                 <Link href="/logout">
+                  <FiLogOut />
                   <span className={classes.spanText}>Logout</span>
                 </Link>
               </>
             ) : (
               <>
-                <FaUser style={{ marginRight: '0.5rem', fontSize: '1.5rem' }} />
                 <Link href="/login">
+                  <Image src="/assets/icons/user.svg" alt="user" width={24} height={24} />
                   <span className={classes.spanText}>Login</span>
                 </Link>
               </>
