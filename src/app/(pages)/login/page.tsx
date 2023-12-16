@@ -24,6 +24,15 @@ export default async function Login() {
         <div className={classes.formContainer}>
           <RenderParams className={classes.params} />
 
+          <Link href="/">
+            <div className={classes.goBackLink}>
+              <div className={classes.imageWrapper}>
+                <Image src="/assets/icons/arrow-left.svg" alt="Home" width={20} height={20} />
+              </div>
+              <span className={classes.spanText}>Home</span>
+            </div>
+          </Link>
+
           <div className={classes.formTitle}>
             <h3>Welcome</h3>
             <Image src="/assets/icons/hand.png" alt="hand" width={30} height={30} />

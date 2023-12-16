@@ -20,12 +20,16 @@
   transition: border 0.3s ease;
 
   &:focus {
-    border: 1px solid var(--color-gray-500);
+    border: 1px solid var(--color-dark-500);
     outline: none;
   }
 
   &:hover {
     border: 1px solid var(--color-gray-500);
+  }
+
+  &:focus:hover {
+    border: 1px solid var(--color-dark-500);
   }
 
   &:-webkit-autofill,
