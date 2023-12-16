@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
-  siteName: 'Payload E-Commerce Template',
-  title: 'Payload E-Commerce Template',
+  siteName: 'Nyla',
+  title: 'Nyla',
   description: 'An open-source e-commerce store built with Payload and Next.js.',
   images: [
     {
