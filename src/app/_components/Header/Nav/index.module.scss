@@ -12,9 +12,99 @@
   > * {
     text-decoration: none;
   }
+
+  @include small-break {
+    display: none;
+  }
+}
+
+@include small-break {
+  .nav a:not(.userIconContainer a) {
+    margin: 1rem 2rem;
+  }
 }
 
 .hide {
   opacity: 0;
   visibility: hidden;
+}
+
+.navButton {
+  transition: background-color 0.2s ease-in-out;
+}
+
+.navButton:hover {
+  background: rgb(39, 37, 37);
+}
+
+@include small-break {
+  .buttonForLargeScreen {
+    display: none;
+  }
+}
+
+// Hamburger styles
+.hamburger {
+  display: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+// When the menu is open, display the .nav as a sliding panel from the right
+@include small-break {
+
+  .hamburger {
+    display: block;
+    position: absolute;
+    left: 10px;
+  }
+    
+  .nav {
+    position: fixed;
+    top: 114px;
+    left: -100%; 
+    height: 100vh; 
+    width: 100vw; 
+    font-size: 1.5rem;
+    background-color: #fff; 
+    transition: left 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    padding: 1rem; 
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+  }
+
+  .nav.isOpen {
+    left: 0; 
+  }
+}
+
+@include small-break {
+  .userIconContainer {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 8.5rem;
+    left: 0;
+    padding-top: 1.2rem;
+    padding-left: 1.2rem;
+    width: 100%;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      border-top: 1px solid #ccc; 
+      width: 100%;
+    }
+  }
+
+  .spanText {
+    font-size: 1.2rem;
+  }
 }

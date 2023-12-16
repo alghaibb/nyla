@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -22,9 +22,11 @@ const HeaderComponent = ({ header }: { header: Header }) => {
         .join(' ')}
     >
       <Gutter className={classes.wrap}>
-        <Link href="/">
-          <Image src="/logo-dark.svg" alt="logo" width={170} height={50} />
-        </Link>
+        <div className={classes.brandLogoWrapper}>
+          <Link href="/">
+            <h1 className={classes.brandLogo}>Nyla</h1>
+          </Link>
+        </div>
 
         <HeaderNav header={header} />
       </Gutter>

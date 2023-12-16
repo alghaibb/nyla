@@ -1,3 +1,5 @@
+@use '../../../_css/queries.scss' as *;
+
 .header {
   padding: 36px 0;
 }
@@ -7,13 +9,21 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: calc(var(--base) / 2) var(--base)
-}
-
-.logo {
-  width: 170px;
+  gap: calc(var(--base) / 2) var(--base);
 }
 
 .hide { 
   display: none;
+}
+
+.brandLogo, .brandLogoWrapper {
+  font-size: 3rem;
+  color: #222121;
+  font-weight: bold;
+
+  @include small-break {
+    font-size: 2rem;
+    text-align: center;
+    margin: 0 auto; 
+  }
 }
