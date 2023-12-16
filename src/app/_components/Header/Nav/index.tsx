@@ -73,10 +73,21 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
 
         {isNavOpen && (
           <div className={`${classes.userIconContainer}`}>
-            <FaUser style={{ marginRight: '0.5rem', fontSize: '1.5rem' }} />
-            <Link href="/login">
-              <span className={classes.spanText}>Login</span>
-            </Link>
+            {user ? (
+              <>
+                <FaUser style={{ marginRight: '0.5rem', fontSize: '1.5rem' }} />
+                <Link href="/logout">
+                  <span className={classes.spanText}>Logout</span>
+                </Link>
+              </>
+            ) : (
+              <>
+                <FaUser style={{ marginRight: '0.5rem', fontSize: '1.5rem' }} />
+                <Link href="/login">
+                  <span className={classes.spanText}>Login</span>
+                </Link>
+              </>
+            )}
           </div>
         )}
       </nav>
