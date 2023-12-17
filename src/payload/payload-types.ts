@@ -20,6 +20,7 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    'form-submissions': FormSubmission;
     redirects: Redirect;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -422,6 +423,16 @@ export interface User {
   loginAttempts?: number;
   lockUntil?: string;
   password: string;
+}
+export interface FormSubmission {
+  id: string;
+  orderID?: string;
+  name?: string;
+  email?: string;
+  message?: string;
+  source?: string;
+  updatedAt: string;
+  createdAt: string;
 }
 export interface Redirect {
   id: string;

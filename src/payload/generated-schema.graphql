@@ -23,6 +23,9 @@ type Query {
   docAccessUser(id: String!): usersDocAccess
   meUser: usersMe
   initializedUser: Boolean
+  FormSubmission(id: String!, draft: Boolean): FormSubmission
+  FormSubmissions(draft: Boolean, where: FormSubmission_where, limit: Int, page: Int, sort: String): FormSubmissions
+  docAccessFormSubmission(id: String!): form_submissionsDocAccess
   Redirect(id: String!, draft: Boolean): Redirect
   Redirects(draft: Boolean, where: Redirect_where, limit: Int, page: Int, sort: String): Redirects
   docAccessRedirect(id: String!): redirectsDocAccess
@@ -6685,6 +6688,350 @@ type usersMe {
   user: User
 }
 
+type FormSubmission {
+  id: String
+  orderID: String
+  name: String
+  email: String
+  message: String
+  source: String
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type FormSubmissions {
+  docs: [FormSubmission]
+  hasNextPage: Boolean
+  hasPrevPage: Boolean
+  limit: Int
+  nextPage: Int
+  offset: Int
+  page: Int
+  pagingCounter: Int
+  prevPage: Int
+  totalDocs: Int
+  totalPages: Int
+}
+
+input FormSubmission_where {
+  orderID: FormSubmission_orderID_operator
+  name: FormSubmission_name_operator
+  email: FormSubmission_email_operator
+  message: FormSubmission_message_operator
+  source: FormSubmission_source_operator
+  updatedAt: FormSubmission_updatedAt_operator
+  createdAt: FormSubmission_createdAt_operator
+  id: FormSubmission_id_operator
+  AND: [FormSubmission_where_and]
+  OR: [FormSubmission_where_or]
+}
+
+input FormSubmission_orderID_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input FormSubmission_name_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input FormSubmission_email_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input FormSubmission_message_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input FormSubmission_source_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input FormSubmission_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input FormSubmission_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input FormSubmission_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input FormSubmission_where_and {
+  orderID: FormSubmission_orderID_operator
+  name: FormSubmission_name_operator
+  email: FormSubmission_email_operator
+  message: FormSubmission_message_operator
+  source: FormSubmission_source_operator
+  updatedAt: FormSubmission_updatedAt_operator
+  createdAt: FormSubmission_createdAt_operator
+  id: FormSubmission_id_operator
+}
+
+input FormSubmission_where_or {
+  orderID: FormSubmission_orderID_operator
+  name: FormSubmission_name_operator
+  email: FormSubmission_email_operator
+  message: FormSubmission_message_operator
+  source: FormSubmission_source_operator
+  updatedAt: FormSubmission_updatedAt_operator
+  createdAt: FormSubmission_createdAt_operator
+  id: FormSubmission_id_operator
+}
+
+type form_submissionsDocAccess {
+  fields: FormSubmissionsDocAccessFields
+  create: FormSubmissionsCreateDocAccess
+  read: FormSubmissionsReadDocAccess
+  update: FormSubmissionsUpdateDocAccess
+  delete: FormSubmissionsDeleteDocAccess
+}
+
+type FormSubmissionsDocAccessFields {
+  orderID: FormSubmissionsDocAccessFields_orderID
+  name: FormSubmissionsDocAccessFields_name
+  email: FormSubmissionsDocAccessFields_email
+  message: FormSubmissionsDocAccessFields_message
+  source: FormSubmissionsDocAccessFields_source
+  updatedAt: FormSubmissionsDocAccessFields_updatedAt
+  createdAt: FormSubmissionsDocAccessFields_createdAt
+}
+
+type FormSubmissionsDocAccessFields_orderID {
+  create: FormSubmissionsDocAccessFields_orderID_Create
+  read: FormSubmissionsDocAccessFields_orderID_Read
+  update: FormSubmissionsDocAccessFields_orderID_Update
+  delete: FormSubmissionsDocAccessFields_orderID_Delete
+}
+
+type FormSubmissionsDocAccessFields_orderID_Create {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_orderID_Read {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_orderID_Update {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_orderID_Delete {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_name {
+  create: FormSubmissionsDocAccessFields_name_Create
+  read: FormSubmissionsDocAccessFields_name_Read
+  update: FormSubmissionsDocAccessFields_name_Update
+  delete: FormSubmissionsDocAccessFields_name_Delete
+}
+
+type FormSubmissionsDocAccessFields_name_Create {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_name_Read {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_name_Update {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_name_Delete {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_email {
+  create: FormSubmissionsDocAccessFields_email_Create
+  read: FormSubmissionsDocAccessFields_email_Read
+  update: FormSubmissionsDocAccessFields_email_Update
+  delete: FormSubmissionsDocAccessFields_email_Delete
+}
+
+type FormSubmissionsDocAccessFields_email_Create {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_email_Read {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_email_Update {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_email_Delete {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_message {
+  create: FormSubmissionsDocAccessFields_message_Create
+  read: FormSubmissionsDocAccessFields_message_Read
+  update: FormSubmissionsDocAccessFields_message_Update
+  delete: FormSubmissionsDocAccessFields_message_Delete
+}
+
+type FormSubmissionsDocAccessFields_message_Create {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_message_Read {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_message_Update {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_message_Delete {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_source {
+  create: FormSubmissionsDocAccessFields_source_Create
+  read: FormSubmissionsDocAccessFields_source_Read
+  update: FormSubmissionsDocAccessFields_source_Update
+  delete: FormSubmissionsDocAccessFields_source_Delete
+}
+
+type FormSubmissionsDocAccessFields_source_Create {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_source_Read {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_source_Update {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_source_Delete {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_updatedAt {
+  create: FormSubmissionsDocAccessFields_updatedAt_Create
+  read: FormSubmissionsDocAccessFields_updatedAt_Read
+  update: FormSubmissionsDocAccessFields_updatedAt_Update
+  delete: FormSubmissionsDocAccessFields_updatedAt_Delete
+}
+
+type FormSubmissionsDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_createdAt {
+  create: FormSubmissionsDocAccessFields_createdAt_Create
+  read: FormSubmissionsDocAccessFields_createdAt_Read
+  update: FormSubmissionsDocAccessFields_createdAt_Update
+  delete: FormSubmissionsDocAccessFields_createdAt_Delete
+}
+
+type FormSubmissionsDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type FormSubmissionsDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type FormSubmissionsCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type FormSubmissionsReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type FormSubmissionsUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type FormSubmissionsDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Redirect {
   id: String
   from: String!
@@ -8418,6 +8765,7 @@ type Access {
   media: mediaAccess
   categories: categoriesAccess
   users: usersAccess
+  form_submissions: form_submissionsAccess
   redirects: redirectsAccess
   payload_preferences: payload_preferencesAccess
   settings: settingsAccess
@@ -10849,6 +11197,205 @@ type UsersUnlockAccess {
   where: JSONObject
 }
 
+type form_submissionsAccess {
+  fields: FormSubmissionsFields
+  create: FormSubmissionsCreateAccess
+  read: FormSubmissionsReadAccess
+  update: FormSubmissionsUpdateAccess
+  delete: FormSubmissionsDeleteAccess
+}
+
+type FormSubmissionsFields {
+  orderID: FormSubmissionsFields_orderID
+  name: FormSubmissionsFields_name
+  email: FormSubmissionsFields_email
+  message: FormSubmissionsFields_message
+  source: FormSubmissionsFields_source
+  updatedAt: FormSubmissionsFields_updatedAt
+  createdAt: FormSubmissionsFields_createdAt
+}
+
+type FormSubmissionsFields_orderID {
+  create: FormSubmissionsFields_orderID_Create
+  read: FormSubmissionsFields_orderID_Read
+  update: FormSubmissionsFields_orderID_Update
+  delete: FormSubmissionsFields_orderID_Delete
+}
+
+type FormSubmissionsFields_orderID_Create {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_orderID_Read {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_orderID_Update {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_orderID_Delete {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_name {
+  create: FormSubmissionsFields_name_Create
+  read: FormSubmissionsFields_name_Read
+  update: FormSubmissionsFields_name_Update
+  delete: FormSubmissionsFields_name_Delete
+}
+
+type FormSubmissionsFields_name_Create {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_name_Read {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_name_Update {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_name_Delete {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_email {
+  create: FormSubmissionsFields_email_Create
+  read: FormSubmissionsFields_email_Read
+  update: FormSubmissionsFields_email_Update
+  delete: FormSubmissionsFields_email_Delete
+}
+
+type FormSubmissionsFields_email_Create {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_email_Read {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_email_Update {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_email_Delete {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_message {
+  create: FormSubmissionsFields_message_Create
+  read: FormSubmissionsFields_message_Read
+  update: FormSubmissionsFields_message_Update
+  delete: FormSubmissionsFields_message_Delete
+}
+
+type FormSubmissionsFields_message_Create {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_message_Read {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_message_Update {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_message_Delete {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_source {
+  create: FormSubmissionsFields_source_Create
+  read: FormSubmissionsFields_source_Read
+  update: FormSubmissionsFields_source_Update
+  delete: FormSubmissionsFields_source_Delete
+}
+
+type FormSubmissionsFields_source_Create {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_source_Read {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_source_Update {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_source_Delete {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_updatedAt {
+  create: FormSubmissionsFields_updatedAt_Create
+  read: FormSubmissionsFields_updatedAt_Read
+  update: FormSubmissionsFields_updatedAt_Update
+  delete: FormSubmissionsFields_updatedAt_Delete
+}
+
+type FormSubmissionsFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_createdAt {
+  create: FormSubmissionsFields_createdAt_Create
+  read: FormSubmissionsFields_createdAt_Read
+  update: FormSubmissionsFields_createdAt_Update
+  delete: FormSubmissionsFields_createdAt_Delete
+}
+
+type FormSubmissionsFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type FormSubmissionsFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type FormSubmissionsCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type FormSubmissionsReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type FormSubmissionsUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type FormSubmissionsDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type redirectsAccess {
   fields: RedirectsFields
   create: RedirectsCreateAccess
@@ -11928,6 +12475,9 @@ type Mutation {
   forgotPasswordUser(disableEmail: Boolean, email: String!, expiration: Int): Boolean!
   resetPasswordUser(password: String, token: String): usersResetPassword
   verifyEmailUser(token: String): Boolean
+  createFormSubmission(data: mutationFormSubmissionInput!, draft: Boolean): FormSubmission
+  updateFormSubmission(id: String!, autosave: Boolean, data: mutationFormSubmissionUpdateInput!, draft: Boolean): FormSubmission
+  deleteFormSubmission(id: String!): FormSubmission
   createRedirect(data: mutationRedirectInput!, draft: Boolean): Redirect
   updateRedirect(id: String!, autosave: Boolean, data: mutationRedirectUpdateInput!, draft: Boolean): Redirect
   deleteRedirect(id: String!): Redirect
@@ -12311,6 +12861,26 @@ type usersLoginResult {
 type usersResetPassword {
   token: String
   user: User
+}
+
+input mutationFormSubmissionInput {
+  orderID: String
+  name: String
+  email: String
+  message: String
+  source: String
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationFormSubmissionUpdateInput {
+  orderID: String
+  name: String
+  email: String
+  message: String
+  source: String
+  updatedAt: String
+  createdAt: String
 }
 
 input mutationRedirectInput {

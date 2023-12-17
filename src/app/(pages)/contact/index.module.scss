@@ -1,0 +1,39 @@
+@use '../../_css/queries.scss' as *;
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.formWrapper {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  margin-top: 40px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: white;
+
+  @include small-break {
+    margin-top: 12px;
+  }
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formContainer p {
+  color: #080707;
+  margin-bottom: 20px;
+}
+
+.formTitle {
+  font-size: 24px;
+  color: #080707;
+  margin-bottom: 10px;
+}
