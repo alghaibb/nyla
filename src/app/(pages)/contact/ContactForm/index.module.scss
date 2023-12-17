@@ -1,0 +1,24 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.message {
+  font-size: 14px;
+  color: red;
+  margin-bottom: 15px;
+}
+
+.submit {
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #191717;
+  }
+
+  &:disabled {
+    background-color: #cccccc;
+  }
+}
