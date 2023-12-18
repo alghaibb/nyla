@@ -57,7 +57,10 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
           return <CMSLink key={i} {...link} appearance="none" />
         })}
         <CartLink />
-        {user && <Link href="/account">Account</Link>}
+
+        <div className={classes.accountLgScreen}>
+          {user && <Link href="/account">Account</Link>}
+        </div>
         {!user && (
           <div className={`${classes.buttonForLargeScreen}`}>
             <Button
@@ -74,20 +77,32 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
         {isNavOpen && (
           <div className={`${classes.userIconContainer}`}>
             {user ? (
-              <>
-                <Link href="/logout">
-                  <Image src="/assets/icons/logout.svg" alt="logout" width={24} height={24} />
-                  <span className={classes.spanText}>Logout</span>
-                </Link>
-              </>
+              <Link href="/logout">
+                <Image src="/assets/icons/logout.svg" alt="logout" width={24} height={24} />
+                <span className={classes.spanText}>Logout</span>
+              </Link>
             ) : (
-              <>
-                <Link href="/login">
-                  <Image src="/assets/icons/user.svg" alt="user" width={24} height={24} />
-                  <span className={classes.spanText}>Login</span>
-                </Link>
-              </>
+              <Link href="/login">
+                <Image src="/assets/icons/user.svg" alt="user" width={24} height={24} />
+                <span className={classes.spanText}>Login</span>
+              </Link>
             )}
+            <div className={classes.linkGroup}>
+              {user && (
+                <Link href="/account">
+                  <div className={classes.accountLink}>
+                    <Image src="/assets/icons/account.svg" alt="account" width={26} height={26} />
+                    <span className={classes.spanText}>Account</span>
+                  </div>
+                </Link>
+              )}
+              <Link href="/contact">
+                <div className={classes.contactLink}>
+                  <Image src="/assets/icons/contact.svg" alt="contact" width={26} height={26} />
+                  <span className={classes.spanText}>Contact</span>
+                </div>
+              </Link>
+            </div>
           </div>
         )}
       </nav>
