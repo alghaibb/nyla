@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { FiLogOut } from 'react-icons/fi'
 import { Twirl as Hamburger } from 'hamburger-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -77,7 +76,7 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
             {user ? (
               <>
                 <Link href="/logout">
-                  <FiLogOut />
+                  <Image src="/assets/icons/logout.svg" alt="logout" width={24} height={24} />
                   <span className={classes.spanText}>Logout</span>
                 </Link>
               </>
