@@ -42,16 +42,6 @@
     display: block;
     position: relative;
     padding-bottom: 1rem;
-  
-    &::after {
-      content: '';
-      display: block;
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 1px;
-      background-color: #080707;
-    }
   }
 }
 
@@ -81,6 +71,13 @@
   background: none;
   border: none;
   color: #080707;
+}
+
+.iconLine {
+  width: 22px;
+  height: 2px;
+  background-color: #080707;
+  margin: 4px 0;
 }
 
 @include small-break {
@@ -130,7 +127,7 @@
     display: none;
     z-index: 1000; 
   }
-  
+
   .navBackdrop.isOpen {
     display: block;
   }
@@ -159,8 +156,9 @@
     align-items: flex-start;
     justify-content: center;
     flex-direction: column;
-    position: fixed;
+    position: absolute;
     bottom: 1rem;
+    top: auto;
     left: 0;
     gap: 0.5rem;
     margin-left: 1rem;

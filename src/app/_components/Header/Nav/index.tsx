@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { Twirl as Hamburger } from 'hamburger-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -75,7 +74,9 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
   return (
     <>
       <button className={classes.hamburger} onClick={toggleNav}>
-        <Hamburger toggled={isNavOpen} toggle={setIsNavOpen} size={24} />
+        <div className={classes.iconLine}></div>
+        <div className={classes.iconLine}></div>
+        <div className={classes.iconLine}></div>
       </button>
 
       <div className={`${classes.navBackdrop} ${isNavOpen ? classes.isOpen : ''}`}></div>
