@@ -13,7 +13,10 @@ import classes from './index.module.scss'
 export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
   const [isNavOpen, setIsNavOpen] = useState(false)
   const [isDesktop, setIsDesktop] = useState(false)
+  const [timeoutId, setTimeoutId] = useState(null)
+
   const navItems = header?.navItems || []
+
   const { user } = useAuth()
 
   const closeNav = () => {
