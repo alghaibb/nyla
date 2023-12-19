@@ -8,15 +8,18 @@ import Link from 'next/link'
 import { Header as HeaderType } from '../../../../payload/payload-types'
 import { useAuth } from '../../../_providers/Auth'
 import { Button } from '../../Button'
-import { CartLink } from '../../CartLink'
-import { CMSLink } from '../../Link'
 
 import classes from './index.module.scss'
 
 export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
   const [isNavOpen, setIsNavOpen] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
   const navItems = header?.navItems || []
   const { user } = useAuth()
+
+  const closeNav = () => {
+    setIsNavOpen(false)
+  }
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen)
@@ -24,8 +27,9 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
 
   // Close the nav if clicking outside of it
   useEffect(() => {
-    const closeNav = e => {
-      if (isNavOpen && !e.target.closest(`.${classes.nav}`)) {
+    const closeNav = (e: MouseEvent) => {
+      const target = e.target as Element
+      if (isNavOpen && !target.closest(`.${classes.nav}`)) {
         setIsNavOpen(false)
 
         // Enable scrolling on the body when the menu is closed
@@ -46,20 +50,61 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
     }
   }, [isNavOpen])
 
+  useEffect(() => {
+    const handleResize = () => setIsDesktop(window.innerWidth > 768)
+    // Set the initial value
+    handleResize()
+    // Add event listener
+    window.addEventListener('resize', handleResize)
+    // Remove event listener on cleanup
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  const desktopNavItems = [
+    { label: 'Home', url: '/' },
+    { label: 'Shop', url: '/products' },
+    { label: 'Cart', url: '/cart' },
+  ]
+
+  const mobileNavItems = [
+    { label: 'Home', url: '/' },
+    { label: 'Shop', url: '/products' },
+    { label: 'Cart', url: '/cart' },
+  ]
+
   return (
     <>
       <button className={classes.hamburger} onClick={toggleNav}>
         <Hamburger toggled={isNavOpen} toggle={setIsNavOpen} size={24} />
       </button>
 
-      <nav className={`${classes.nav} ${isNavOpen ? classes.isOpen : ''}`}>
-        {navItems.map(({ link }, i) => {
-          return <CMSLink key={i} {...link} appearance="none" />
-        })}
-        <CartLink />
+      <div className={`${classes.navBackdrop} ${isNavOpen ? classes.isOpen : ''}`}></div>
 
+      <nav className={`${classes.nav} ${isNavOpen ? classes.isOpen : ''}`}>
+        {isNavOpen && (
+          <div className={classes.closeIcon} onClick={toggleNav}>
+            &times;
+          </div>
+        )}
+        {isDesktop
+          ? desktopNavItems.map((item, i) => (
+              // Render desktop links
+              <Link key={i} href={item.url} onClick={closeNav}>
+                {item.label}
+              </Link>
+            ))
+          : mobileNavItems.map((item, i) => (
+              // Render mobile links
+              <Link key={i} href={item.url} onClick={closeNav}>
+                <span className={classes.mobileSpanText}>{item.label}</span>
+              </Link>
+            ))}
         <div className={classes.accountLgScreen}>
-          {user && <Link href="/account">Account</Link>}
+          {user && (
+            <Link href="/account" onClick={closeNav}>
+              Account
+            </Link>
+          )}
         </div>
         {!user && (
           <div className={`${classes.buttonForLargeScreen}`}>
@@ -68,38 +113,40 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
               href="/login"
               label="Login"
               appearance="primary"
-              onClick={() => (window.location.href = '/login')}
+              onClick={() => {
+                closeNav()
+                window.location.href = '/login'
+              }}
               className={classes.navButton}
             />
           </div>
         )}
-
         {isNavOpen && (
           <div className={`${classes.userIconContainer}`}>
             {user ? (
-              <Link href="/logout">
-                <Image src="/assets/icons/logout.svg" alt="logout" width={24} height={24} />
+              <Link href="/logout" onClick={closeNav}>
+                <Image src="/assets/icons/logout.svg" alt="logout" width={20} height={20} />
                 <span className={classes.spanText}>Logout</span>
               </Link>
             ) : (
-              <Link href="/login">
-                <Image src="/assets/icons/user.svg" alt="user" width={24} height={24} />
+              <Link href="/login" onClick={closeNav}>
+                <Image src="/assets/icons/user.svg" alt="user" width={20} height={20} />
                 <span className={classes.spanText}>Login</span>
               </Link>
             )}
             <div className={classes.linkGroup}>
               {user && (
-                <Link href="/account">
-                  <div className={classes.accountLink}>
-                    <Image src="/assets/icons/account.svg" alt="account" width={26} height={26} />
+                <div className={classes.accountLink}>
+                  <Link href="/account" onClick={closeNav}>
+                    <Image src="/assets/icons/account.svg" alt="account" width={20} height={20} />
                     <span className={classes.spanText}>Account</span>
-                  </div>
-                </Link>
+                  </Link>
+                </div>
               )}
-              <Link href="/contact">
+              <Link href="/contact" onClick={closeNav}>
                 <div className={classes.contactLink}>
-                  <Image src="/assets/icons/contact.svg" alt="contact" width={26} height={26} />
-                  <span className={classes.spanText}>Contact</span>
+                  <Image src="/assets/icons/contact.svg" alt="contact" width={20} height={20} />
+                  <span className={classes.spanText}>Contact Us</span>
                 </div>
               </Link>
             </div>
