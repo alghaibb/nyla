@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from 'react'
 
+import { Button } from '../Button'
+
 import classes from './index.module.scss'
 
 const Promotion = () => {
@@ -54,15 +56,28 @@ const Promotion = () => {
           <StatBox label="Seconds" value={time.seconds} />
         </ul> */}
       </div>
+      <div className={classes.imageContainer}>
+        <div className={classes.image}></div>
+      </div>
+      <div className={classes.dealBtnContainer}>
+        <Button
+          el="link"
+          href="/products"
+          label="View Products"
+          appearance="primary"
+          onClick={() => (window.location.href = '/products')}
+          className={classes.dealBtn}
+        />
+      </div>
     </section>
   )
 }
 
-const StatBox = ({ label, value }: { label: string; value: number }) => (
-  <li className={classes.statBox}>
-    <h4>{value}</h4>
-    <p>{label}</p>
-  </li>
-)
+// const StatBox = ({ label, value }: { label: string; value: number }) => (
+//   <li className={classes.statBox}>
+//     <h4>{value}</h4>
+//     <p>{label}</p>
+//   </li>
+// )
 
 export default Promotion
