@@ -57,3 +57,11 @@
 .empty a {
   text-decoration: underline;
 }
+
+.checkoutButton {
+  transition: background-color 0.2s ease-in-out;
+}
+
+.checkoutButton:hover {
+  background-color: #1d1b1b;
+}
