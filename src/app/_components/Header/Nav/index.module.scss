@@ -2,12 +2,14 @@
 
 .nav {
   display: flex;
-  gap: calc(var(--base) / 4) var(--base);
+  gap: calc(var(--base) / 2);
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   opacity: 1;
   transition: opacity 100ms linear;
   visibility: visible;
+  font-weight: 500;
 
   > * {
     text-decoration: none;
@@ -19,8 +21,35 @@
 }
 
 .nav a:not(.userIconContainer a) {
+  position: relative;
+  transition: color 0.3s ease;
+  text-decoration: none;
   margin: 0 0.5rem;
+  padding: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px; 
+    background-color: currentColor; 
+    transform: scaleX(0); 
+    transform-origin: bottom left; 
+    transition: transform 0.3s ease;
+  }
 }
+
+.nav a:not(.userIconContainer a):hover::after {
+  transform: scaleX(1); 
+}
+
+.nav a:not(.userIconContainer a)::after {
+  transform-origin: bottom right; 
+}
+
+
 
 @include small-break {
   .nav {
@@ -31,9 +60,12 @@
   .nav a:not(.userIconContainer a) {
     padding-left: 0;
     padding-right: 0;
-    font-weight: 400;
+    font-weight: 600;
     color: #080707;
-    width: 100%;
+  }
+
+  .nav a:not(.userIconContainer a)::after {
+    display: none;
   }
 
   .mobileSpanText {

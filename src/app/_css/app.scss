@@ -60,13 +60,13 @@ body {
 
 ::selection {
   background: var(--color-dark-500);
-  color: var(--color-base-800);
+  color: var(--color-base-150);
 }
 
 ::-moz-selection {
   background: var(--color-dark-50);
   color: var(--color-base-800);
-}
+}           
 
 img {
   max-width: 100%;
