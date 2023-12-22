@@ -13,7 +13,6 @@ import classes from './index.module.scss'
 export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
   const [isNavOpen, setIsNavOpen] = useState(false)
   const [isDesktop, setIsDesktop] = useState(false)
-  const [timeoutId, setTimeoutId] = useState(null)
 
   const navItems = header?.navItems || []
 
@@ -63,13 +62,11 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
   }, [])
 
   const desktopNavItems = [
-    { label: 'Home', url: '/' },
     { label: 'Shop', url: '/products' },
     { label: 'Cart', url: '/cart' },
   ]
 
   const mobileNavItems = [
-    { label: 'Home', url: '/' },
     { label: 'Shop', url: '/products' },
     { label: 'Cart', url: '/cart' },
   ]
