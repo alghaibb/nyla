@@ -42,9 +42,9 @@ export default function ContactForm() {
     setIsSubmitting(false)
 
     if (res.status === 201) {
-      toast.success('Your message has been sent!')
+      toast.success('Message sent, we&apos;ll get back to you soon')
     } else {
-      toast.error('Something went wrong, please try again!')
+      toast.error('Something went wrong, please try again')
     }
   }
 
