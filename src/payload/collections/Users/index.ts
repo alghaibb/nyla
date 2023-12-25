@@ -47,6 +47,10 @@ const Users: CollectionConfig = {
       type: 'text',
     },
     {
+      name: 'email',
+      type: 'email',
+    },
+    {
       name: 'roles',
       type: 'select',
       hasMany: true,
@@ -92,6 +96,24 @@ const Users: CollectionConfig = {
         components: {
           Field: CustomerSelect,
         },
+      },
+    },
+    {
+      name: 'resetPasswordToken',
+      label: 'Reset Password Token',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+      },
+    },
+    {
+      name: 'resetPasswordExpiration',
+      label: 'Reset Password Expiration',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
       },
     },
     {
