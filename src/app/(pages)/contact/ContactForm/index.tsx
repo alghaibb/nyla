@@ -26,26 +26,43 @@ export default function ContactForm() {
   } = useForm<FormData>()
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formSubmitted, setFormSubmitted] = useState(false)
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true)
 
-    const res = await fetch('/api/form-submissions', {
-      body: JSON.stringify({ ...data }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'post',
-    })
+    try {
+      const res = await fetch('/api/form-submissions', {
+        body: JSON.stringify({ ...data }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'post',
+      })
 
-    reset()
-    setIsSubmitting(false)
+      reset()
+      setIsSubmitting(false)
 
-    if (res.status === 201) {
-      toast.success('Message sent, we&apos;ll get back to you soon')
-    } else {
-      toast.error('Something went wrong, please try again')
+      if (res.status === 201) {
+        setFormSubmitted(true)
+      } else {
+        toast.error('Something went wrong, please try again')
+      }
+    } catch (error) {
+      setIsSubmitting(false)
+      toast.error('An error occurred, please try again')
     }
+  }
+
+  if (formSubmitted) {
+    return (
+      <div className={classes.thankYouMessage}>
+        <p>
+          Thank you for contacting us. We have received your message and will get back to you as
+          soon as we can.
+        </p>
+      </div>
+    )
   }
 
   return (
