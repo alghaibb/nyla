@@ -4771,6 +4771,7 @@ type User {
   purchases: [Product!]
   stripeCustomerID: String
   cart: User_Cart
+  wishlist: User_Wishlist
   skipSync: Boolean
   updatedAt: DateTime
   createdAt: DateTime
@@ -4794,6 +4795,16 @@ type User_Cart {
 }
 
 type CartItems {
+  product: Product
+  quantity: Float
+  id: String
+}
+
+type User_Wishlist {
+  items: [WishlistItems!]
+}
+
+type WishlistItems {
   product: Product
   quantity: Float
   id: String
@@ -6137,6 +6148,9 @@ input User_where {
   cart__items__product: User_cart__items__product_operator
   cart__items__quantity: User_cart__items__quantity_operator
   cart__items__id: User_cart__items__id_operator
+  wishlist__items__product: User_wishlist__items__product_operator
+  wishlist__items__quantity: User_wishlist__items__quantity_operator
+  wishlist__items__id: User_wishlist__items__id_operator
   skipSync: User_skipSync_operator
   updatedAt: User_updatedAt_operator
   createdAt: User_createdAt_operator
@@ -6221,6 +6235,36 @@ input User_cart__items__id_operator {
   exists: Boolean
 }
 
+input User_wishlist__items__product_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input User_wishlist__items__quantity_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input User_wishlist__items__id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
 input User_skipSync_operator {
   equals: Boolean
   not_equals: Boolean
@@ -6278,6 +6322,9 @@ input User_where_and {
   cart__items__product: User_cart__items__product_operator
   cart__items__quantity: User_cart__items__quantity_operator
   cart__items__id: User_cart__items__id_operator
+  wishlist__items__product: User_wishlist__items__product_operator
+  wishlist__items__quantity: User_wishlist__items__quantity_operator
+  wishlist__items__id: User_wishlist__items__id_operator
   skipSync: User_skipSync_operator
   updatedAt: User_updatedAt_operator
   createdAt: User_createdAt_operator
@@ -6293,6 +6340,9 @@ input User_where_or {
   cart__items__product: User_cart__items__product_operator
   cart__items__quantity: User_cart__items__quantity_operator
   cart__items__id: User_cart__items__id_operator
+  wishlist__items__product: User_wishlist__items__product_operator
+  wishlist__items__quantity: User_wishlist__items__quantity_operator
+  wishlist__items__id: User_wishlist__items__id_operator
   skipSync: User_skipSync_operator
   updatedAt: User_updatedAt_operator
   createdAt: User_createdAt_operator
@@ -6315,6 +6365,7 @@ type UsersDocAccessFields {
   purchases: UsersDocAccessFields_purchases
   stripeCustomerID: UsersDocAccessFields_stripeCustomerID
   cart: UsersDocAccessFields_cart
+  wishlist: UsersDocAccessFields_wishlist
   skipSync: UsersDocAccessFields_skipSync
   updatedAt: UsersDocAccessFields_updatedAt
   createdAt: UsersDocAccessFields_createdAt
@@ -6538,6 +6589,133 @@ type UsersDocAccessFields_cart_items_id_Update {
 }
 
 type UsersDocAccessFields_cart_items_id_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist {
+  create: UsersDocAccessFields_wishlist_Create
+  read: UsersDocAccessFields_wishlist_Read
+  update: UsersDocAccessFields_wishlist_Update
+  delete: UsersDocAccessFields_wishlist_Delete
+  fields: UsersDocAccessFields_wishlist_Fields
+}
+
+type UsersDocAccessFields_wishlist_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_Fields {
+  items: UsersDocAccessFields_wishlist_items
+}
+
+type UsersDocAccessFields_wishlist_items {
+  create: UsersDocAccessFields_wishlist_items_Create
+  read: UsersDocAccessFields_wishlist_items_Read
+  update: UsersDocAccessFields_wishlist_items_Update
+  delete: UsersDocAccessFields_wishlist_items_Delete
+  fields: UsersDocAccessFields_wishlist_items_Fields
+}
+
+type UsersDocAccessFields_wishlist_items_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_items_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_items_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_items_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_items_Fields {
+  product: UsersDocAccessFields_wishlist_items_product
+  quantity: UsersDocAccessFields_wishlist_items_quantity
+  id: UsersDocAccessFields_wishlist_items_id
+}
+
+type UsersDocAccessFields_wishlist_items_product {
+  create: UsersDocAccessFields_wishlist_items_product_Create
+  read: UsersDocAccessFields_wishlist_items_product_Read
+  update: UsersDocAccessFields_wishlist_items_product_Update
+  delete: UsersDocAccessFields_wishlist_items_product_Delete
+}
+
+type UsersDocAccessFields_wishlist_items_product_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_items_product_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_items_product_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_items_product_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_items_quantity {
+  create: UsersDocAccessFields_wishlist_items_quantity_Create
+  read: UsersDocAccessFields_wishlist_items_quantity_Read
+  update: UsersDocAccessFields_wishlist_items_quantity_Update
+  delete: UsersDocAccessFields_wishlist_items_quantity_Delete
+}
+
+type UsersDocAccessFields_wishlist_items_quantity_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_items_quantity_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_items_quantity_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_items_quantity_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_items_id {
+  create: UsersDocAccessFields_wishlist_items_id_Create
+  read: UsersDocAccessFields_wishlist_items_id_Read
+  update: UsersDocAccessFields_wishlist_items_id_Update
+  delete: UsersDocAccessFields_wishlist_items_id_Delete
+}
+
+type UsersDocAccessFields_wishlist_items_id_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_items_id_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_items_id_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_wishlist_items_id_Delete {
   permission: Boolean!
 }
 
@@ -10831,6 +11009,7 @@ type UsersFields {
   purchases: UsersFields_purchases
   stripeCustomerID: UsersFields_stripeCustomerID
   cart: UsersFields_cart
+  wishlist: UsersFields_wishlist
   skipSync: UsersFields_skipSync
   updatedAt: UsersFields_updatedAt
   createdAt: UsersFields_createdAt
@@ -11054,6 +11233,133 @@ type UsersFields_cart_items_id_Update {
 }
 
 type UsersFields_cart_items_id_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist {
+  create: UsersFields_wishlist_Create
+  read: UsersFields_wishlist_Read
+  update: UsersFields_wishlist_Update
+  delete: UsersFields_wishlist_Delete
+  fields: UsersFields_wishlist_Fields
+}
+
+type UsersFields_wishlist_Create {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_Read {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_Update {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_Fields {
+  items: UsersFields_wishlist_items
+}
+
+type UsersFields_wishlist_items {
+  create: UsersFields_wishlist_items_Create
+  read: UsersFields_wishlist_items_Read
+  update: UsersFields_wishlist_items_Update
+  delete: UsersFields_wishlist_items_Delete
+  fields: UsersFields_wishlist_items_Fields
+}
+
+type UsersFields_wishlist_items_Create {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_items_Read {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_items_Update {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_items_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_items_Fields {
+  product: UsersFields_wishlist_items_product
+  quantity: UsersFields_wishlist_items_quantity
+  id: UsersFields_wishlist_items_id
+}
+
+type UsersFields_wishlist_items_product {
+  create: UsersFields_wishlist_items_product_Create
+  read: UsersFields_wishlist_items_product_Read
+  update: UsersFields_wishlist_items_product_Update
+  delete: UsersFields_wishlist_items_product_Delete
+}
+
+type UsersFields_wishlist_items_product_Create {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_items_product_Read {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_items_product_Update {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_items_product_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_items_quantity {
+  create: UsersFields_wishlist_items_quantity_Create
+  read: UsersFields_wishlist_items_quantity_Read
+  update: UsersFields_wishlist_items_quantity_Update
+  delete: UsersFields_wishlist_items_quantity_Delete
+}
+
+type UsersFields_wishlist_items_quantity_Create {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_items_quantity_Read {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_items_quantity_Update {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_items_quantity_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_items_id {
+  create: UsersFields_wishlist_items_id_Create
+  read: UsersFields_wishlist_items_id_Read
+  update: UsersFields_wishlist_items_id_Update
+  delete: UsersFields_wishlist_items_id_Delete
+}
+
+type UsersFields_wishlist_items_id_Create {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_items_id_Read {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_items_id_Update {
+  permission: Boolean!
+}
+
+type UsersFields_wishlist_items_id_Delete {
   permission: Boolean!
 }
 
@@ -12779,6 +13085,7 @@ input mutationUserInput {
   purchases: [String]
   stripeCustomerID: String
   cart: mutationUser_CartInput
+  wishlist: mutationUser_WishlistInput
   skipSync: Boolean
   updatedAt: String
   createdAt: String
@@ -12807,12 +13114,23 @@ input mutationUser_Cart_ItemsInput {
   id: String
 }
 
+input mutationUser_WishlistInput {
+  items: [mutationUser_Wishlist_ItemsInput]
+}
+
+input mutationUser_Wishlist_ItemsInput {
+  product: String
+  quantity: Float
+  id: String
+}
+
 input mutationUserUpdateInput {
   name: String
   roles: [UserUpdate_roles_MutationInput]
   purchases: [String]
   stripeCustomerID: String
   cart: mutationUserUpdate_CartInput
+  wishlist: mutationUserUpdate_WishlistInput
   skipSync: Boolean
   updatedAt: String
   createdAt: String
@@ -12836,6 +13154,16 @@ input mutationUserUpdate_CartInput {
 }
 
 input mutationUserUpdate_Cart_ItemsInput {
+  product: String
+  quantity: Float
+  id: String
+}
+
+input mutationUserUpdate_WishlistInput {
+  items: [mutationUserUpdate_Wishlist_ItemsInput]
+}
+
+input mutationUserUpdate_Wishlist_ItemsInput {
   product: String
   quantity: Float
   id: String

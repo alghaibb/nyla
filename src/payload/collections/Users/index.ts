@@ -164,6 +164,34 @@ const Users: CollectionConfig = {
       ],
     },
     {
+      label: 'Wishlist',
+      name: 'wishlist',
+      type: 'group',
+      fields: [
+        {
+          name: 'items',
+          label: 'Items',
+          type: 'array',
+          interfaceName: 'WishlistItems',
+          fields: [
+            {
+              name: 'product',
+              type: 'relationship',
+              relationTo: 'products',
+            },
+            {
+              name: 'quantity',
+              type: 'number',
+              min: 0,
+              admin: {
+                step: 1,
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
       name: 'skipSync',
       label: 'Skip Sync',
       type: 'checkbox',
