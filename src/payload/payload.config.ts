@@ -24,7 +24,7 @@ import BeforeLogin from './components/BeforeLogin'
 import { createPaymentIntent } from './endpoints/create-payment-intent'
 import { customersProxy } from './endpoints/customers'
 import { productsProxy } from './endpoints/products'
-import { seed } from './endpoints/seed'
+// import { seed } from './endpoints/seed'
 import { Footer } from './globals/Footer'
 import { Header } from './globals/Header'
 import { Settings } from './globals/Settings'
@@ -115,11 +115,11 @@ export default buildConfig({
     },
     // The seed endpoint is used to populate the database with some example data
     // You should delete this endpoint before deploying your site to production
-    {
-      path: '/seed',
-      method: 'get',
-      handler: seed,
-    },
+    // {
+    //   path: '/seed',
+    //   method: 'get',
+    //   handler: seed,
+    // },
   ],
   plugins: [
     // formBuilder({}),
