@@ -6,6 +6,7 @@ import { AuthProvider } from '../_providers/Auth'
 import { CartProvider } from '../_providers/Cart'
 import { FilterProvider } from './Filter'
 import { ThemeProvider } from './Theme'
+import { WishlistProvider } from './Wishlist'
 
 export const Providers: React.FC<{
   children: React.ReactNode
@@ -14,7 +15,9 @@ export const Providers: React.FC<{
     <ThemeProvider>
       <AuthProvider>
         <FilterProvider>
-          <CartProvider>{children}</CartProvider>
+          <CartProvider>
+            <WishlistProvider>{children}</WishlistProvider>
+          </CartProvider>
         </FilterProvider>
       </AuthProvider>
     </ThemeProvider>

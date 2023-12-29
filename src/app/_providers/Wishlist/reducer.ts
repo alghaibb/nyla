@@ -76,7 +76,7 @@ export const wishlistReducer = (wishlist: WishlistType, action: WishlistAction):
 
       let withAddedItem = [...(wishlist?.items || [])]
 
-      if (indexInWishlist > -1) {
+      if (indexInWishlist === -1) {
         withAddedItem.push(item)
       }
 

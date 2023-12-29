@@ -69,7 +69,7 @@ export const WishlistProvider = props => {
 
         const parsedWishlist = JSON.parse(localWishlist || '{}')
 
-        if (parsedWishlist?.items && parsedWishlist?.items.lenght > 0) {
+        if (parsedWishlist?.items && parsedWishlist?.items.length > 0) {
           const initailWishlist = await Promise.all(
             parsedWishlist.items.map(async ({ product, quantity }) => {
               const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${product.id}`)
