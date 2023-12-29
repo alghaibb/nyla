@@ -16,6 +16,10 @@ type WishlistAction =
     payload: WishlistItem
   }
   | {
+    type: 'MERGE_WISHLIST'
+    payload: WishlistType
+  }
+  | {
     type: 'DELETE_ITEM'
     payload: Product
   }
@@ -27,6 +31,37 @@ export const wishlistReducer = (wishlist: WishlistType, action: WishlistAction):
   switch (action.type) {
     case 'SET_WISHLIST': {
       return action.payload
+    }
+
+    case 'MERGE_WISHLIST': {
+      const { payload: incomingWishlist } = action
+
+      const syncedItems: WishlistItem[] = [
+        ...(wishlist?.items || []),
+        ...(incomingWishlist?.items || []),
+      ].reduce((acc: WishlistItem[], item) => {
+        const productId = typeof item.product === 'string' ? item.product : item?.product?.id
+
+        const indexInAcc = acc.findIndex(({ product }) =>
+          typeof product === 'string' ? product === productId : product?.id === productId,
+        )
+
+        if (indexInAcc > -1) {
+          acc[indexInAcc] = {
+            ...acc[indexInAcc],
+            // customize the merge logic here, e.g.:
+            // quantity: acc[indexInAcc].quantity + item.quantity
+          }
+        } else {
+          acc.push(item)
+        }
+        return acc
+      }, [])
+
+      return {
+        ...wishlist,
+        items: syncedItems,
+      }
     }
 
     case 'ADD_ITEM': {
