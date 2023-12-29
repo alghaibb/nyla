@@ -14,6 +14,11 @@ export const Pagination: React.FC<{
   const hasNextPage = page < totalPages
   const hasPrevPage = page > 1
 
+  const handleNextPageClick = () => {
+    onClick(page + 1)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
     <div className={[classes.pagination, className].filter(Boolean).join(' ')}>
       <button
@@ -22,6 +27,7 @@ export const Pagination: React.FC<{
         disabled={!hasPrevPage}
         onClick={() => {
           onClick(page - 1)
+          window.scrollTo({ top: 0, behavior: 'smooth' })
         }}
       >
         <Chevron rotate={90} className={classes.icon} />
@@ -35,9 +41,7 @@ export const Pagination: React.FC<{
         type="button"
         className={classes.button}
         disabled={!hasNextPage}
-        onClick={() => {
-          onClick(page + 1)
-        }}
+        onClick={handleNextPageClick}
       >
         <Chevron rotate={-90} className={classes.icon} />
       </button>

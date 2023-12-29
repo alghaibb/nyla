@@ -64,11 +64,13 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
   const desktopNavItems = [
     { label: 'Shop', url: '/products' },
     { label: 'Cart', url: '/cart' },
+    { label: 'Wishlist', url: '/wishlist' },
   ]
 
   const mobileNavItems = [
     { label: 'Shop', url: '/products' },
     { label: 'Cart', url: '/cart' },
+    { label: 'Wishlist', url: '/wishlist' },
   ]
 
   return (
