@@ -1,0 +1,12 @@
+@import '../../_css/common';
+
+.removeFromWishlistButton {
+  all: unset;
+  cursor: pointer;
+  @extend %label;
+  transition: transform 0.4s ease;
+}
+
+.removeFromWishlistButton:hover {
+  transform: scale(1.2);
+}
