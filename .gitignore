@@ -6,3 +6,8 @@ node_modules
 .env
 .next
 .vercel
+__test__
+jest.config.ts
+jest.setup.ts
+.vscode/
+.swc

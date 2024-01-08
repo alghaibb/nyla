@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Chevron } from '../Chevron'
 
@@ -7,16 +7,29 @@ import classes from './index.module.scss'
 export const Pagination: React.FC<{
   page: number
   totalPages: number
+  itemsCount: number
   onClick: (page: number) => void
   className?: string
 }> = props => {
-  const { page, totalPages, onClick, className } = props
+  const { page, totalPages, itemsCount, onClick, className } = props
   const hasNextPage = page < totalPages
   const hasPrevPage = page > 1
 
+  const isMobile = window.innerWidth < 768
+
+  useEffect(() => {
+    // Check if it's not the last page or if it's the last page with more than one item
+    if (!(page === totalPages && itemsCount === 1)) {
+      const scrollOptions: ScrollToOptions = {
+        top: isMobile ? 100 : 0,
+        behavior: 'smooth',
+      }
+      window.scrollTo(scrollOptions)
+    }
+  }, [page, totalPages, itemsCount]) // Effect runs when these values change
+
   const handleNextPageClick = () => {
     onClick(page + 1)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
@@ -27,7 +40,6 @@ export const Pagination: React.FC<{
         disabled={!hasPrevPage}
         onClick={() => {
           onClick(page - 1)
-          window.scrollTo({ top: 0, behavior: 'smooth' })
         }}
       >
         <Chevron rotate={90} className={classes.icon} />
