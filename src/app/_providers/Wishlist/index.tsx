@@ -38,8 +38,6 @@ export const WishlistProvider = props => {
   const { children } = props
   const { user, status: authStatus } = useAuth()
 
-  const [wishlistCreationTime, setWishlistCreationTime] = useState<number | null>(null)
-
   const [wishlist, dispatchWishlist] = useReducer(wishlistReducer, {
     items: [],
   })
