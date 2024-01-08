@@ -106,17 +106,15 @@ export const WishlistProvider = props => {
         payload: user?.wishlist,
       })
     } else if (authStatus === 'loggedOut') {
-      const now = Date.now()
-      const oneWeek = 7 * 24 * 60 * 60 * 1000
-
-      if (wishlistCreationTime && now - wishlistCreationTime > oneWeek) {
-        clearWishlist()
-        setWishlistCreationTime(null)
-      }
+      const localWishlist = JSON.parse(localStorage.getItem('wishlist') || '{}')
+      dispatchWishlist({
+        type: 'MERGE_WISHLIST',
+        payload: localWishlist,
+      })
+      // Save the localWishlist back to local storage
+      localStorage.setItem('wishlist', JSON.stringify(localWishlist))
     }
-  }, [authStatus, user, wishlistCreationTime])
-
-  const prevWishlist = useRef(wishlist)
+  }, [authStatus, user])
 
   useEffect(() => {
     if (!hasInitialized.current || user === undefined) return

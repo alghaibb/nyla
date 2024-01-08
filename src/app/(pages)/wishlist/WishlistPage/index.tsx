@@ -88,13 +88,7 @@ export const WishlistPage: React.FC<{
           {wishlistIsEmpty ? (
             <div className={classes.empty}>
               <p>Your wishlist is currently empty.</p>
-              {!user && (
-                <Fragment>
-                  {' '}
-                  <Link href={`/login?redirect=%2Fwishlist`}>Login</Link>
-                  {` to view products added to your wishlist.`}
-                </Fragment>
-              )}
+              {!user && <Fragment></Fragment>}
             </div>
           ) : (
             <div>
