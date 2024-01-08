@@ -87,22 +87,34 @@ export const wishlistReducer = (wishlist: WishlistType, action: WishlistAction):
     }
 
     case 'DELETE_ITEM': {
-      const { payload: incomingProduct } = action
-      const deletedItem = { ...wishlist }
+      const { payload: incomingProduct } = action;
 
-      const indexInWishlist = wishlist?.items?.findIndex(({ product }) =>
+      // Create a deep copy of wishlist
+      const deletedItem = {
+        ...wishlist,
+        items: wishlist.items ? [...wishlist.items] : [],
+      };
+
+      const indexInWishlist = deletedItem.items.findIndex(({ product }) =>
         typeof product === 'string'
           ? product === incomingProduct.id
           : product?.id === incomingProduct.id,
-      )
+      );
 
-      if (typeof indexInWishlist === 'number' && deletedItem.items && indexInWishlist > -1)
-        deletedItem.items.splice(indexInWishlist, 1)
+      if (typeof indexInWishlist === 'number' && indexInWishlist > -1) {
+        // Create a new array without the deleted item
+        deletedItem.items = [
+          ...deletedItem.items.slice(0, indexInWishlist),
+          ...deletedItem.items.slice(indexInWishlist + 1),
+        ];
+      }
 
-      return deletedItem
+      return deletedItem;
     }
 
+
     case 'CLEAR_WISHLIST': {
+
       return {
         ...wishlist,
         items: [],

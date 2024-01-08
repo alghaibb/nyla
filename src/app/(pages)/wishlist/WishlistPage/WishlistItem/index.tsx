@@ -1,37 +1,51 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useToasts } from 'react-toast-notifications'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { Product } from '../../../../../payload/payload-types'
 import { Media } from '../../../../_components/Media'
 import { Price } from '../../../../_components/Price'
 import { RemoveFromWishlistButton } from '../../../../_components/RemoveFromWishlistButton'
+import { useCart } from '../../../../_providers/Cart'
 
 import classes from './index.module.scss'
 
-const WishlistItem = ({ product, title, metaImage, qty, addItemToWishlist }) => {
+interface WishlistItemProps {
+  product: Product
+  title: string
+  metaImage: string | Media
+  qty: number
+  addItemToWishlist: (item: { product?: string | Product; quantity?: number; id?: string }) => void
+  addItemToCart: (item: { product?: string | Product; quantity?: number; id?: string }) => void
+}
+
+const WishlistItem: React.FC<WishlistItemProps> = ({ product, title, metaImage, qty }) => {
+  const { addItemToCart } = useCart()
+  const { addToast } = useToasts()
+
   const [quantity, setQuantity] = useState(qty)
+  const [addedToCart, setAddedToCart] = useState(false)
 
-  const decrementQty = () => {
-    const updatedQty = quantity > 1 ? quantity - 1 : 1
+  const addToCartIndividualItem = () => {
+    addItemToCart({
+      product,
+      quantity: 1,
+    })
 
-    setQuantity(updatedQty)
-    addItemToWishlist({ product, quantity: Number(updatedQty) })
-  }
+    setAddedToCart(true)
 
-  const incrementQty = () => {
-    const updatedQty = quantity + 1
-
-    setQuantity(updatedQty)
-    addItemToWishlist({ product, quantity: Number(updatedQty) })
-  }
-
-  const enterQty = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedQty = Number(e.target.value)
-
-    setQuantity(updatedQty)
-    addItemToWishlist({ product, quantity: Number(updatedQty) })
+    addToast(`${quantity} ${product.title} has been added to your cart`, {
+      appearance: 'success',
+      autoDismiss: true,
+      style: {
+        borderRadius: 10,
+        background: '#333',
+        color: '#fff',
+      },
+    })
   }
 
   return (
@@ -48,39 +62,19 @@ const WishlistItem = ({ product, title, metaImage, qty, addItemToWishlist }) => 
           <h6>{title}</h6>
           <Price product={product} button={false} />
         </div>
-
-        <div className={classes.quantity}>
-          <div className={classes.quantityBtn} onClick={decrementQty}>
-            <Image
-              src="/assets/icons/minus.svg"
-              alt="minus"
-              width={24}
-              height={24}
-              className={classes.qtnBt}
-            />
-          </div>
-
-          <input
-            type="number"
-            className={classes.quantityInput}
-            value={quantity}
-            onChange={enterQty}
-          />
-
-          <div className={classes.quantityBtn} onClick={incrementQty}>
-            <Image
-              src="/assets/icons/plus.svg"
-              alt="plus"
-              width={24}
-              height={24}
-              className={classes.qtnBt}
-            />
-          </div>
-        </div>
       </div>
       <div className={classes.subtotalWrapper}>
-        <Price product={product} button={false} quantity={quantity} />
+        <div className={classes.addToCartButton} onClick={addToCartIndividualItem}>
+          <Image
+            src="/assets/icons/add-to-cart.png"
+            alt="add-to-cart"
+            width={26}
+            height={26}
+            className={classes.addToCartIcon}
+          />
+        </div>
         <RemoveFromWishlistButton product={product} className={classes.removeFromWishlistButton} />
+        <Price product={product} button={false} quantity={quantity} />
       </div>
     </li>
   )
