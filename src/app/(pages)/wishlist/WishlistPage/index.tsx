@@ -1,12 +1,16 @@
 'use client'
 
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
+import { useToasts } from 'react-toast-notifications'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import { Page, Settings } from '../../../../payload/payload-types'
 import { Button } from '../../../_components/Button'
 import { LoadingShimmer } from '../../../_components/LoadingShimmer'
+import Modal from '../../../_components/Modal'
 import { useAuth } from '../../../_providers/Auth'
+import { useCart } from '../../../_providers/Cart'
 import { useWishlist } from '../../../_providers/Wishlist'
 import WishlistItem from './WishlistItem'
 
@@ -16,13 +20,61 @@ export const WishlistPage: React.FC<{
   settings: Settings
   page: Page
 }> = props => {
+  const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false)
+
   const { settings } = props
   const { productsPage } = settings || {}
-
   const { user } = useAuth()
+  const router = useRouter()
+  const { addToast } = useToasts()
 
-  const { wishlist, wishlistIsEmpty, addItemToWishlist, wishlistTotal, hasInitializedWishlist } =
-    useWishlist()
+  const {
+    wishlist,
+    wishlistIsEmpty,
+    addItemToWishlist,
+    wishlistTotal,
+    hasInitializedWishlist,
+    clearWishlist,
+  } = useWishlist()
+  const { addItemToCart } = useCart()
+
+  const handleAddAllToCart = () => {
+    wishlist?.items?.forEach(item => {
+      if (typeof item.product === 'object') {
+        const { quantity, product } = item
+        addItemToCart({
+          product,
+          quantity,
+        })
+      }
+    })
+
+    const redirectPath = user ? '/cart' : '/login?redirect=%2Fcart'
+    router.push(redirectPath)
+
+    addToast('All items in your wishlist have been added to your cart', {
+      appearance: 'success',
+      autoDismiss: true,
+      style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+      },
+    })
+  }
+
+  const removeAllFromWishlist = () => {
+    setIsRemoveModalOpen(true)
+  }
+
+  const confirmRemoveAllFromWishlist = () => {
+    clearWishlist()
+    setIsRemoveModalOpen(false)
+  }
+
+  const closeModal = () => {
+    setIsRemoveModalOpen(false)
+  }
 
   return (
     <Fragment>
@@ -35,19 +87,12 @@ export const WishlistPage: React.FC<{
         <Fragment>
           {wishlistIsEmpty ? (
             <div className={classes.empty}>
-              Your wishlist is empty.
-              {typeof productsPage === 'object' && productsPage?.slug && (
-                <Fragment>
-                  {' '}
-                  <Link href={`/${productsPage.slug}`}>Click here</Link>
-                  {` to shop.`}
-                </Fragment>
-              )}
+              <p>Your wishlist is currently empty.</p>
               {!user && (
                 <Fragment>
                   {' '}
                   <Link href={`/login?redirect=%2Fwishlist`}>Login</Link>
-                  {` to view a saved wishlist.`}
+                  {` to view products added to your wishlist.`}
                 </Fragment>
               )}
             </div>
@@ -56,11 +101,7 @@ export const WishlistPage: React.FC<{
               {/* WISHLIST LIST HEADER */}
               <div className={classes.header}>
                 <p>Products</p>
-                <div className={classes.headerItemDetails}>
-                  <p></p>
-                  <p></p>
-                  <p>Quantity</p>
-                </div>
+                <div className={classes.headerItemDetails}></div>
                 <p className={classes.headersubtotal}>Subtotal</p>
               </div>
               {/* WISHLIST ITEM LIST */}
@@ -85,6 +126,7 @@ export const WishlistPage: React.FC<{
                         metaImage={metaImage}
                         qty={quantity}
                         addItemToWishlist={addItemToWishlist}
+                        addItemToCart={addItemToCart}
                       />
                     )
                   }
@@ -103,10 +145,24 @@ export const WishlistPage: React.FC<{
                 </div>
 
                 <Button
-                  className={classes.checkoutButton}
-                  href={user ? '/checkout' : '/login?redirect=%2Fcheckout'}
-                  label={user ? 'Checkout' : 'Login to checkout'}
+                  className={classes.addToCartButton}
+                  onClick={handleAddAllToCart}
+                  label={'Add All to Cart'}
                   appearance="primary"
+                />
+                <Button
+                  className={classes.addToCartButton}
+                  onClick={removeAllFromWishlist}
+                  label={'Remove All From Wishlist'}
+                  appearance="primary"
+                />
+
+                <Modal
+                  isOpen={isRemoveModalOpen}
+                  title="Remove All Items"
+                  content="Are you sure you want to remove all items from your wishlist?"
+                  closeModal={closeModal}
+                  confirmAction={confirmRemoveAllFromWishlist}
                 />
               </div>
             </div>

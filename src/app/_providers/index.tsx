@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { ToastProvider } from 'react-toast-notifications'
 
 import { AuthProvider } from '../_providers/Auth'
 import { CartProvider } from '../_providers/Cart'
@@ -16,7 +17,9 @@ export const Providers: React.FC<{
       <AuthProvider>
         <FilterProvider>
           <CartProvider>
-            <WishlistProvider>{children}</WishlistProvider>
+            <ToastProvider>
+              <WishlistProvider>{children}</WishlistProvider>
+            </ToastProvider>
           </CartProvider>
         </FilterProvider>
       </AuthProvider>

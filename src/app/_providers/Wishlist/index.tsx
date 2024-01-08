@@ -19,13 +19,13 @@ export type WishlistContext = {
   addItemToWishlist: (item: WishlistItem) => void
   deleteItemFromWishlist: (product: Product) => void
   wishlistIsEmpty: boolean | undefined
-  clearWishlist: () => void
   isProductInWishlist: (product: Product) => boolean
   wishlistTotal: {
     formatted: string
     raw: number
   }
   hasInitializedWishlist: boolean
+  clearWishlist: () => void
 }
 
 const Context = createContext({} as WishlistContext)
@@ -34,16 +34,11 @@ export const useWishlist = () => useContext(Context)
 
 const arrayHasItems = array => Array.isArray(array) && array.length > 0
 
-// Step 1: Check local storage for a wishlist
-// Step 2: If there is a wishlist, fetch the products and hydrate the wishlist
-// Step 3: Authenticate the user
-// Step 4: If the user is authenticated, merge the user's wishlist with the local wishlist
-// Step 4B: Sync the wishlist to Payload and clear local storage
-// Step 5: If the user is logged out, sync the wishlist to local storage only
-
 export const WishlistProvider = props => {
   const { children } = props
   const { user, status: authStatus } = useAuth()
+
+  const [wishlistCreationTime, setWishlistCreationTime] = useState<number | null>(null)
 
   const [wishlist, dispatchWishlist] = useReducer(wishlistReducer, {
     items: [],
@@ -66,13 +61,14 @@ export const WishlistProvider = props => {
 
       const syncWishlistFromLocalStorage = async () => {
         const localWishlist = localStorage.getItem('wishlist')
+        console.log('Local Wishlist:', localWishlist)
 
         const parsedWishlist = JSON.parse(localWishlist || '{}')
 
         if (parsedWishlist?.items && parsedWishlist?.items.length > 0) {
-          const initailWishlist = await Promise.all(
+          const initialWishlist = await Promise.all(
             parsedWishlist.items.map(async ({ product, quantity }) => {
-              const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${product.id}`)
+              const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${product.slug}`)
               const data = await res.json()
               return {
                 product: data,
@@ -84,7 +80,7 @@ export const WishlistProvider = props => {
           dispatchWishlist({
             type: 'SET_WISHLIST',
             payload: {
-              items: initailWishlist,
+              items: initialWishlist,
             },
           })
         } else {
@@ -109,14 +105,18 @@ export const WishlistProvider = props => {
         type: 'MERGE_WISHLIST',
         payload: user?.wishlist,
       })
-    }
+    } else if (authStatus === 'loggedOut') {
+      const now = Date.now()
+      const oneWeek = 7 * 24 * 60 * 60 * 1000
 
-    if (authStatus === 'loggedOut') {
-      dispatchWishlist({
-        type: 'CLEAR_WISHLIST',
-      })
+      if (wishlistCreationTime && now - wishlistCreationTime > oneWeek) {
+        clearWishlist()
+        setWishlistCreationTime(null)
+      }
     }
-  }, [authStatus, user])
+  }, [authStatus, user, wishlistCreationTime])
+
+  const prevWishlist = useRef(wishlist)
 
   useEffect(() => {
     if (!hasInitialized.current || user === undefined) return
@@ -145,7 +145,7 @@ export const WishlistProvider = props => {
             credentials: 'include',
             method: 'PATCH',
             body: JSON.stringify({
-              cart: flattenWishlist,
+              wishlist: flattenWishlist,
             }),
             headers: {
               'Content-Type': 'application/json',
@@ -200,11 +200,9 @@ export const WishlistProvider = props => {
     })
   }, [])
 
-  const clearWishlist = useCallback(() => {
-    dispatchWishlist({
-      type: 'CLEAR_WISHLIST',
-    })
-  }, [])
+  const clearWishlist = () => {
+    dispatchWishlist({ type: 'CLEAR_WISHLIST' })
+  }
 
   useEffect(() => {
     if (!hasInitialized) return
@@ -236,10 +234,10 @@ export const WishlistProvider = props => {
         addItemToWishlist,
         deleteItemFromWishlist,
         wishlistIsEmpty: hasInitialized && !arrayHasItems(wishlist?.items),
-        clearWishlist,
         isProductInWishlist,
         wishlistTotal: total,
         hasInitializedWishlist,
+        clearWishlist,
       }}
     >
       {children && children}
