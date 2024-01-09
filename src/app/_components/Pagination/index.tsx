@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react'
+'use client'
+
+import React, { useEffect, useState } from 'react'
 
 import { Chevron } from '../Chevron'
 
@@ -11,13 +13,21 @@ export const Pagination: React.FC<{
   onClick: (page: number) => void
   className?: string
 }> = props => {
+  const [isInitialLoad, setIsInitialLoad] = useState(true)
+
   const { page, totalPages, itemsCount, onClick, className } = props
+
   const hasNextPage = page < totalPages
   const hasPrevPage = page > 1
 
   const isMobile = window.innerWidth < 768
 
   useEffect(() => {
+    // Prevent scroll on initial load
+    if (isInitialLoad) {
+      setIsInitialLoad(false)
+      return
+    }
     // Check if it's not the last page or if it's the last page with more than one item
     if (!(page === totalPages && itemsCount === 1)) {
       const scrollOptions: ScrollToOptions = {
