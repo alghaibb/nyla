@@ -171,6 +171,7 @@ export const CollectionArchive: React.FC<Props> = props => {
             page={results.page}
             totalPages={results.totalPages}
             onClick={setPage}
+            itemsCount={results.totalDocs}
           />
         )}
       </Fragment>
