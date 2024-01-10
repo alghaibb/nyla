@@ -1,3 +1,5 @@
+'use client'
+
 import React, { Fragment } from 'react'
 import Link from 'next/link'
 
@@ -9,6 +11,7 @@ import { Media } from '../../_components/Media'
 import { Message } from '../../_components/Message'
 import { Price } from '../../_components/Price'
 import RichText from '../../_components/RichText'
+import { useAuth } from '../../_providers/Auth'
 
 import classes from './index.module.scss'
 
@@ -22,6 +25,8 @@ export const ProductHero: React.FC<{
     categories,
     meta: { image: metaImage, description } = {},
   } = product
+
+  const { user } = useAuth()
 
   return (
     <Gutter className={classes.productHero}>
@@ -62,7 +67,7 @@ export const ProductHero: React.FC<{
           <p>{description}</p>
         </div>
         <AddToCartButton product={product} className={classes.addToCartButton} />
-        <AddToWishlistButton product={product} className={classes.addToWishlistButton} />
+        {user && <AddToWishlistButton product={product} className={classes.addToWishlistButton} />}
       </div>
     </Gutter>
   )

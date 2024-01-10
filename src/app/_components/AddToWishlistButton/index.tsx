@@ -15,7 +15,7 @@ export const AddToWishlistButton: React.FC<{
   className?: string
   appearance?: Props['appearance']
 }> = props => {
-  const { product, quantity = 1, className, appearance = 'primary' } = props
+  const { product, quantity = 1, className, appearance = 'secondary' } = props
 
   const { wishlist, addItemToWishlist, isProductInWishlist, hasInitializedWishlist } = useWishlist()
 
