@@ -4780,6 +4780,8 @@ type User {
   resetPasswordExpiration: DateTime
   salt: String
   hash: String
+  _verified: Boolean
+  _verificationToken: String
   loginAttempts: Float
   lockUntil: DateTime
   password: String!
@@ -6155,6 +6157,7 @@ input User_where {
   updatedAt: User_updatedAt_operator
   createdAt: User_createdAt_operator
   email: User_email_operator
+  _verified: User__verified_operator
   id: User_id_operator
   AND: [User_where_and]
   OR: [User_where_or]
@@ -6303,6 +6306,12 @@ input User_email_operator {
   all: [EmailAddress]
 }
 
+input User__verified_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
+}
+
 input User_id_operator {
   equals: String
   not_equals: String
@@ -6329,6 +6338,7 @@ input User_where_and {
   updatedAt: User_updatedAt_operator
   createdAt: User_createdAt_operator
   email: User_email_operator
+  _verified: User__verified_operator
   id: User_id_operator
 }
 
@@ -6347,6 +6357,7 @@ input User_where_or {
   updatedAt: User_updatedAt_operator
   createdAt: User_createdAt_operator
   email: User_email_operator
+  _verified: User__verified_operator
   id: User_id_operator
 }
 
@@ -6370,6 +6381,7 @@ type UsersDocAccessFields {
   updatedAt: UsersDocAccessFields_updatedAt
   createdAt: UsersDocAccessFields_createdAt
   email: UsersDocAccessFields_email
+  _verified: UsersDocAccessFields__verified
   password: UsersDocAccessFields_password
 }
 
@@ -6808,6 +6820,29 @@ type UsersDocAccessFields_email_Update {
 }
 
 type UsersDocAccessFields_email_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields__verified {
+  create: UsersDocAccessFields__verified_Create
+  read: UsersDocAccessFields__verified_Read
+  update: UsersDocAccessFields__verified_Update
+  delete: UsersDocAccessFields__verified_Delete
+}
+
+type UsersDocAccessFields__verified_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields__verified_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields__verified_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields__verified_Delete {
   permission: Boolean!
 }
 
@@ -11014,6 +11049,7 @@ type UsersFields {
   updatedAt: UsersFields_updatedAt
   createdAt: UsersFields_createdAt
   email: UsersFields_email
+  _verified: UsersFields__verified
   password: UsersFields_password
 }
 
@@ -11452,6 +11488,29 @@ type UsersFields_email_Update {
 }
 
 type UsersFields_email_Delete {
+  permission: Boolean!
+}
+
+type UsersFields__verified {
+  create: UsersFields__verified_Create
+  read: UsersFields__verified_Read
+  update: UsersFields__verified_Update
+  delete: UsersFields__verified_Delete
+}
+
+type UsersFields__verified_Create {
+  permission: Boolean!
+}
+
+type UsersFields__verified_Read {
+  permission: Boolean!
+}
+
+type UsersFields__verified_Update {
+  permission: Boolean!
+}
+
+type UsersFields__verified_Delete {
   permission: Boolean!
 }
 
@@ -13094,6 +13153,8 @@ input mutationUserInput {
   resetPasswordExpiration: String
   salt: String
   hash: String
+  _verified: Boolean
+  _verificationToken: String
   loginAttempts: Float
   lockUntil: String
   password: String!
@@ -13139,6 +13200,8 @@ input mutationUserUpdateInput {
   resetPasswordExpiration: String
   salt: String
   hash: String
+  _verified: Boolean
+  _verificationToken: String
   loginAttempts: Float
   lockUntil: String
   password: String
