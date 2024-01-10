@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { Header as HeaderType } from '../../../../payload/payload-types'
 import { useAuth } from '../../../_providers/Auth'
 import { Button } from '../../Button'
+import { useToasts } from 'react-toast-notifications'
 
 import classes from './index.module.scss'
 
@@ -17,6 +18,7 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
   const navItems = header?.navItems || []
 
   const { user } = useAuth()
+  const { addToast } = useToasts()
 
   const closeNav = () => {
     setIsNavOpen(false)
@@ -61,6 +63,21 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  const handleWishlistClick = e => {
+    if (!user) {
+      e.preventDefault() // Prevent default link behavior
+      addToast('You must be logged in to access your Wishlist. Redirecting you now...', {
+        appearance: 'warning',
+        autoDismiss: true,
+      })
+      setTimeout(() => {
+        window.location.href = '/login'
+      }, 2000)
+    } else {
+      closeNav()
+    }
+  }
+
   const renderWishlistLink = () => {
     if (user) {
       return (
@@ -70,7 +87,7 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
       )
     } else {
       return (
-        <Link href="/login" onClick={closeNav}>
+        <Link href={user ? '/wishlist' : '/login'} onClick={handleWishlistClick}>
           <span className={classes.mobileSpanText}>Wishlist</span>
         </Link>
       )
