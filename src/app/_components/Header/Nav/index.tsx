@@ -61,16 +61,30 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  const renderWishlistLink = () => {
+    if (user) {
+      return (
+        <Link href="/wishlist" onClick={closeNav}>
+          <span className={classes.mobileSpanText}>Wishlist</span>
+        </Link>
+      )
+    } else {
+      return (
+        <Link href="/login" onClick={closeNav}>
+          <span className={classes.mobileSpanText}>Wishlist</span>
+        </Link>
+      )
+    }
+  }
+
   const desktopNavItems = [
     { label: 'Shop', url: '/products' },
     { label: 'Cart', url: '/cart' },
-    { label: 'Wishlist', url: '/wishlist' },
   ]
 
   const mobileNavItems = [
     { label: 'Shop', url: '/products' },
     { label: 'Cart', url: '/cart' },
-    { label: 'Wishlist', url: '/wishlist' },
   ]
 
   return (
@@ -102,6 +116,7 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
                 <span className={classes.mobileSpanText}>{item.label}</span>
               </Link>
             ))}
+        {renderWishlistLink()}
         <div className={classes.accountLgScreen}>
           {user && (
             <Link href="/account" onClick={closeNav}>
