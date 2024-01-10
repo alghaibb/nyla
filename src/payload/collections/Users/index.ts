@@ -28,12 +28,7 @@ const Users: CollectionConfig = {
     beforeChange: [createStripeCustomer],
     afterChange: [loginAfterCreate],
   },
-  auth: {
-    tokenExpiration: 86400,
-    verify: true,
-    maxLoginAttempts: 5,
-    lockTime: 600 * 1000,
-  },
+  auth: true,
   endpoints: [
     {
       path: '/:teamID/customer',

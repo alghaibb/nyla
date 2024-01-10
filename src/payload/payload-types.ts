@@ -428,8 +428,6 @@ export interface User {
   resetPasswordExpiration?: string;
   salt?: string;
   hash?: string;
-  _verified?: boolean;
-  _verificationToken?: string;
   loginAttempts?: number;
   lockUntil?: string;
   password: string;
