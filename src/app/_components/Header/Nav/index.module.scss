@@ -26,30 +26,8 @@
   text-decoration: none;
   margin: 0 0.5rem;
   padding: 0;
-
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 2px; 
-    background-color: currentColor; 
-    transform: scaleX(0); 
-    transform-origin: bottom left; 
-    transition: transform 0.3s ease;
-  }
+  color: #080707;
 }
-
-.nav a:not(.userIconContainer a):hover::after {
-  transform: scaleX(1); 
-}
-
-.nav a:not(.userIconContainer a)::after {
-  transform-origin: bottom right; 
-}
-
 
 
 @include small-break {
