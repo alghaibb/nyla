@@ -8,6 +8,7 @@ import { Header as HeaderType } from '../../../../payload/payload-types'
 import { useAuth } from '../../../_providers/Auth'
 import { Button } from '../../Button'
 import { useToasts } from 'react-toast-notifications'
+import { useRouter } from 'next/navigation'
 
 import classes from './index.module.scss'
 
@@ -16,6 +17,7 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
   const [isDesktop, setIsDesktop] = useState(false)
 
   const navItems = header?.navItems || []
+  const router = useRouter()
 
   const { user } = useAuth()
   const { addToast } = useToasts()
@@ -71,7 +73,7 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
         autoDismiss: true,
       })
       setTimeout(() => {
-        window.location.href = '/login'
+        router.push('/login')
       }, 2000)
     }
     closeNav()
@@ -105,7 +107,11 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
 
   return (
     <>
-      <button className={classes.hamburger} onClick={toggleNav}>
+      <button
+        className={classes.hamburger}
+        onClick={toggleNav}
+        aria-label="Toggle Mobile Navigation"
+      >
         <div className={classes.iconLine}></div>
         <div className={classes.iconLine}></div>
         <div className={classes.iconLine}></div>
@@ -149,7 +155,7 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
               appearance="primary"
               onClick={() => {
                 closeNav()
-                window.location.href = '/login'
+                router.push('/login')
               }}
               className={classes.navButton}
             />
