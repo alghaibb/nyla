@@ -73,9 +73,8 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
       setTimeout(() => {
         window.location.href = '/login'
       }, 2000)
-    } else {
-      closeNav()
     }
+    closeNav()
   }
 
   const renderWishlistLink = () => {
